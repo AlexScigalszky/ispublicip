@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Verificar IP</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script>
     var language = {
       en: {
@@ -68,15 +70,36 @@
   </script>
 </head>
 <body>
-  <h1 class="lang" data-lang-key="title">Verificar IP</h1>
-  <label class="lang" data-lang-key="ipLabel" for="ipInput">Dirección IP:</label>
-  <input type="text" id="ipInput">
-  <button onclick="verificarIP()" class="lang" data-lang-key="verifyButton">Verificar</button>
-  <p id="resultado"></p>
-  
-  <div>
-    <button class="lang-button active" data-lang="en" onclick="changeLanguage('en')">English</button>
-    <button class="lang-button" data-lang="es" onclick="changeLanguage('es')">Español</button>
+  <div class="container">
+    <h1 class="mt-5 lang" data-lang-key="title">Verificar IP</h1>
+    
+    <div class="row mt-4">
+      <div class="col-6">
+        <label class="form-label lang" data-lang-key="ipLabel" for="ipInput">Dirección IP:</label>
+        <input type="text" class="form-control" id="ipInput">
+      </div>
+    </div>
+    
+    <div class="row mt-2">
+      <div class="col-6">
+        <button onclick="verificarIP()" class="btn btn-primary lang" data-lang-key="verifyButton">Verificar</button>
+      </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-6">
+        <p id="resultado" class="mt-3"></p>
+      </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-6">
+        <div>
+          <button class="lang-button active btn btn-outline-primary me-2" data-lang="en" onclick="changeLanguage('en')">English</button>
+          <button class="lang-button btn btn-outline-primary" data-lang="es" onclick="changeLanguage('es')">Español</button>
+        </div>
+      </div>
+    </div>
   </div>
   
   <script>
