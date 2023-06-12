@@ -12,9 +12,26 @@
       height: 100vh;
     }
     
-    .ip-image {
+    .ip-container {
       max-width: 300px;
-      max-height: 200px;
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 18px;
+      color: #fff;
+      font-weight: bold;
+    }
+    
+    .private {
+      background-color: #42a5f5; /* Blue */
+    }
+    
+    .public {
+      background-color: #66bb6a; /* Green */
+    }
+    
+    .invalid {
+      background-color: #ef5350; /* Red */
     }
   </style>
   <script>
@@ -25,9 +42,7 @@
         verifyButton: "Verify",
         privateIP: "Private IP",
         publicIP: "Public IP",
-        invalidIP: "Invalid IP Address",
-        privateImage: "private.png",
-        publicImage: "public.png"
+        invalidIP: "Invalid IP Address"
       },
       es: {
         title: "Verificar IP",
@@ -35,9 +50,7 @@
         verifyButton: "Verificar",
         privateIP: "IP privada",
         publicIP: "IP pública",
-        invalidIP: "Dirección IP inválida",
-        privateImage: "privado.png",
-        publicImage: "publico.png"
+        invalidIP: "Dirección IP inválida"
       }
     };
     
@@ -64,14 +77,17 @@
             (primerOcteto === 172 && parseInt(ip.split(".")[1], 10) >= 16 && parseInt(ip.split(".")[1], 10) <= 31) ||
             (primerOcteto === 192 && parseInt(ip.split(".")[1], 10) === 168)) {
           document.getElementById("resultado").textContent = language[getCurrentLanguage()].privateIP;
-          document.getElementById("ipImage").src = language[getCurrentLanguage()].privateImage;
+          document.getElementById("ipContainer").classList.remove("public", "invalid");
+          document.getElementById("ipContainer").classList.add("private");
         } else {
           document.getElementById("resultado").textContent = language[getCurrentLanguage()].publicIP;
-          document.getElementById("ipImage").src = language[getCurrentLanguage()].publicImage;
+          document.getElementById("ipContainer").classList.remove("private", "invalid");
+          document.getElementById("ipContainer").classList.add("public");
         }
       } else {
         document.getElementById("resultado").textContent = language[getCurrentLanguage()].invalidIP;
-        document.getElementById("ipImage").src = "";
+        document.getElementById("ipContainer").classList.remove("private", "public");
+        document.getElementById("ipContainer").classList.add("invalid");
       }
     }
     
@@ -108,8 +124,7 @@
     
     <div class="row mt-4">
       <div class="col-6 mx-auto">
-        <p id="resultado" class="mt-3"></p>
-        <img id="ipImage" class="mt-3 ip-image">
+        <div id="ipContainer" class="ip-container mt-3"></div>
       </div>
     </div>
     
