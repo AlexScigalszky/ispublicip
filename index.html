@@ -3,6 +3,34 @@
 <head>
   <title>Verificar IP</title>
   <script>
+    var language = {
+      en: {
+        title: "Check IP",
+        ipLabel: "IP Address:",
+        verifyButton: "Verify",
+        privateIP: "Private IP",
+        publicIP: "Public IP",
+        invalidIP: "Invalid IP Address"
+      },
+      es: {
+        title: "Verificar IP",
+        ipLabel: "Dirección IP:",
+        verifyButton: "Verificar",
+        privateIP: "IP privada",
+        publicIP: "IP pública",
+        invalidIP: "Dirección IP inválida"
+      }
+    };
+    
+    function changeLanguage(lang) {
+      var elements = document.getElementsByClassName("lang");
+      
+      for (var i = 0; i < elements.length; i++) {
+        var key = elements[i].getAttribute("data-lang-key");
+        elements[i].textContent = language[lang][key];
+      }
+    }
+    
     function verificarIP() {
       var ip = document.getElementById("ipInput").value;
       
@@ -16,21 +44,51 @@
         if (primerOcteto === 10 ||
             (primerOcteto === 172 && parseInt(ip.split(".")[1], 10) >= 16 && parseInt(ip.split(".")[1], 10) <= 31) ||
             (primerOcteto === 192 && parseInt(ip.split(".")[1], 10) === 168)) {
-          document.getElementById("resultado").textContent = "IP privada";
+          document.getElementById("resultado").textContent = language[getCurrentLanguage()].privateIP;
         } else {
-          document.getElementById("resultado").textContent = "IP pública";
+          document.getElementById("resultado").textContent = language[getCurrentLanguage()].publicIP;
         }
       } else {
-        document.getElementById("resultado").textContent = "Dirección IP inválida";
+        document.getElementById("resultado").textContent = language[getCurrentLanguage()].invalidIP;
       }
+    }
+    
+    function getCurrentLanguage() {
+      var langButtons = document.getElementsByClassName("lang-button");
+      
+      for (var i = 0; i < langButtons.length; i++) {
+        if (langButtons[i].classList.contains("active")) {
+          return langButtons[i].getAttribute("data-lang");
+        }
+      }
+      
+      // Default language: English
+      return "en";
     }
   </script>
 </head>
 <body>
-  <h1>Verificar si una IP es pública o privada</h1>
-  <label for="ipInput">Dirección IP:</label>
+  <h1 class="lang" data-lang-key="title">Verificar IP</h1>
+  <label class="lang" data-lang-key="ipLabel" for="ipInput">Dirección IP:</label>
   <input type="text" id="ipInput">
-  <button onclick="verificarIP()">Verificar</button>
+  <button onclick="verificarIP()" class="lang" data-lang-key="verifyButton">Verificar</button>
   <p id="resultado"></p>
+  
+  <div>
+    <button class="lang-button active" data-lang="en" onclick="changeLanguage('en')">English</button>
+    <button class="lang-button" data-lang="es" onclick="changeLanguage('es')">Español</button>
+  </div>
+  
+  <script>
+    // Set initial language based on user preference or default to English
+    var userLang = navigator.language || navigator.userLanguage;
+    var defaultLang = "en";
+    
+    if (userLang.startsWith("es")) {
+      defaultLang = "es";
+    }
+    
+    changeLanguage(defaultLang);
+  </script>
 </body>
 </html>
