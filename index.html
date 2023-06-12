@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verificar IP</title>
+  <script>
+    function verificarIP() {
+      var ip = document.getElementById("ipInput").value;
+      
+      // Expresión regular para validar una dirección IP
+      var ipRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
+      
+      if (ipRegex.test(ip)) {
+        // Obtener el primer octeto de la dirección IP
+        var primerOcteto = parseInt(ip.split(".")[0], 10);
+        
+        if (primerOcteto === 10 ||
+            (primerOcteto === 172 && parseInt(ip.split(".")[1], 10) >= 16 && parseInt(ip.split(".")[1], 10) <= 31) ||
+            (primerOcteto === 192 && parseInt(ip.split(".")[1], 10) === 168)) {
+          document.getElementById("resultado").textContent = "IP privada";
+        } else {
+          document.getElementById("resultado").textContent = "IP pública";
+        }
+      } else {
+        document.getElementById("resultado").textContent = "Dirección IP inválida";
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Verificar si una IP es pública o privada</h1>
+  <label for="ipInput">Dirección IP:</label>
+  <input type="text" id="ipInput">
+  <button onclick="verificarIP()">Verificar</button>
+  <p id="resultado"></p>
+</body>
+</html>
